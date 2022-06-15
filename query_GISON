@@ -28,20 +28,8 @@ INSERT INTO surowce (id_surowca, rok, miesiac, cena_srednia) VALUES
 (222, 5, 12, 3.46)
 
 	
--- select * from (
---   SELECT *,
---   ROW_NUMBER() OVER(PARTITION BY id_surowca ORDER BY id asc) AS Row
---   FROM surowce
--- ) dups
--- where 
--- dups.Row > 1
-
 
 -- czy wpis dotyczący ceny nie jest powielony
-IF NOT EXISTS ( SELECT 1 FROM surowce WHERE id_surowca = 1 AND cena_srednia = 3.44 )
-BEGIN
-    INSERT INTO surowce (id_surowca, rok, miesiac, cena_srednia) VALUES (1, 2, 3, 3.44)
-END
 
 INSERT INTO surowce (id_surowca, rok, miesiac, cena_srednia) SELECT 1, 2, 3, 3.44
 WHERE NOT EXISTS (SELECT cena_srednia FROM surowce WHERE cena_srednia = 3.44)
